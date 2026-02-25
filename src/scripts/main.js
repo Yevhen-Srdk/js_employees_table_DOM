@@ -249,9 +249,9 @@ form.addEventListener('submit', (e) => {
   const inputName = fields[0].element.value;
   const position = fields[1].element.value.trim();
   const age = Number(fields[3].element.value);
-  const salary = Number.parseInt(fields[4].element.value);
+  const salaryInput = fields[4].element.value.trim();
 
-  if (inputName.length < 4 || !isOnlyLetters(inputName)) {
+  if (inputName.length < 4) {
     notification('Name must contain at least 4 letters', 'error');
 
     return;
@@ -265,6 +265,20 @@ form.addEventListener('submit', (e) => {
 
   if (age < 18 || age > 90) {
     notification('Age cant be less than 18 and bigger than 90', 'error');
+
+    return;
+  }
+
+  if (salaryInput === '') {
+    notification('Salary cant be empty', 'error');
+
+    return;
+  }
+
+  const salary = Number.parseInt(salaryInput);
+
+  if (isNaN(salary)) {
+    notification('Salary must be a number', 'error');
 
     return;
   }
@@ -292,7 +306,3 @@ form.addEventListener('submit', (e) => {
 
   notification('Person added success', 'success');
 });
-
-function isOnlyLetters(value) {
-  return /^\p{L}+$/u.test(value);
-}
