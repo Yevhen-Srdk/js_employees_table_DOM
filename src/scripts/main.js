@@ -36,6 +36,11 @@ tableBody.addEventListener('dblclick', (e) => {
   }
 
   const originalValue = cell.textContent;
+
+  if (document.querySelector('.cell-input')) {
+    return;
+  }
+
   const input = document.createElement('input');
 
   input.value = originalValue;
@@ -68,6 +73,12 @@ function removeClass() {
 
 for (let i = 0; i < tableTitles.length; i++) {
   tableTitles[i].addEventListener('click', () => {
+    for (const key in isClicked) {
+      if (parseInt(key) !== i) {
+        isClicked[key] = false;
+      }
+    }
+
     sortTable(i);
     isClicked[i] = !isClicked[i];
   });
@@ -219,8 +230,6 @@ function createNotification() {
     if (!document.body.contains(notificationElement)) {
       document.body.appendChild(notificationElement);
     }
-
-    document.body.appendChild(notificationElement);
 
     title.textContent = message;
     notificationElement.classList.add(statusClass);
